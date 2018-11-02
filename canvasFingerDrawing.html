@@ -1,21 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CSS and JS Clock</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CanvasDrawingApp</title>
+	
+<style type="text/css">
+
+#canvas{
+	width:200;
+	height:200;
+	background-color:blue;
+
+}
+
+
+</style>	
+	
+	
 </head>
 <body>
+
 
 <canvas id="canvas">
 </canvas>
 
+<button id="clear-btn">CLEAR</button>
+<button id="red">RED</button>
+
+<input id="input1" type="text" >
+<span id="demo"></span>
+
 
 <script>
 
+const WIDTH = 200;
+const HEIGHT = 200;
+
+
 const cvs = document.querySelector("#canvas");
+	cvs.style.width  = WIDTH;
+	cvs.style.height = HEIGHT;
 const ctx = cvs.getContext('2d');
+const clearBtn = document.getElementById("clear-btn");
+const input1 = document.querySelector("#input1");
+
+ctx.fillStyle ="red";
+ctx.fillRect(0,0,50,50);
+
+const clearButton=function(){
+	ctx.clearRect(0,0,WIDTH, HEIGHT );
+};
+
+const showCoordinates=function(event){
+	
+	let x = event.touches[0].clientX ;
+	alert(WIDTH);
+	let demo = document.getElementById("demo");
+		demo.innerHTML = x;
+	input1.value = x;
+
+};
 
 
-
+clearBtn.addEventListener("click", clearButton, false);
+body.addEventListener("touchstart", showCoordinates, false);
 
 </script>
 
