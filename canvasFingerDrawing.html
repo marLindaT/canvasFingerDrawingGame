@@ -6,14 +6,6 @@
 	
 <style type="text/css">
 
-#canvas{
-	width:200;
-	height:200;
-	background-color:blue;
-
-}
-
-
 </style>	
 	
 	
@@ -24,46 +16,81 @@
 <canvas id="canvas">
 </canvas>
 
+<br>
+
 <button id="clear-btn">CLEAR</button>
 <button id="red">RED</button>
+<br>
 
-<input id="input1" type="text" >
+<label for"inputX">Xcoord</label>
+<br>
+<input id="inputX" type="text" >
+<br>
+
+<label for="inputY">Ycoord</label>
+<br>
+<input id="inputY" type="text" >
+
 <span id="demo"></span>
 
 
 <script>
+//demo.innerHTML = variable; //used for testing output
+//let demo = document.getElementById("demo");
 
-const WIDTH = 200;
-const HEIGHT = 200;
 
-
+const WIDTH = "500px";
+const HEIGHT = "500px";
 const cvs = document.querySelector("#canvas");
 	cvs.style.width  = WIDTH;
 	cvs.style.height = HEIGHT;
 const ctx = cvs.getContext('2d');
 const clearBtn = document.getElementById("clear-btn");
-const input1 = document.querySelector("#input1");
 
-ctx.fillStyle ="red";
-ctx.fillRect(0,0,50,50);
+const inputX = document.querySelector("#inputX");//display for X touch
+const inputY = document.querySelector("#inputY");//display for Y touch
+
+const touches =[];
+
+
+//functions
 
 const clearButton=function(){
 	ctx.clearRect(0,0,WIDTH, HEIGHT );
 };
 
-const showCoordinates=function(event){
+const logCoordinates=function(event){
 	
-	let x = event.touches[0].clientX ;
-	alert(WIDTH);
-	let demo = document.getElementById("demo");
-		demo.innerHTML = x;
-	input1.value = x;
+	let x = event.touches[0].clientX;
+		inputX.value = x;
+	let y = event.touches[0].clientY;
+		inputY.value= y;
+	//console.log([`${x}, ${y}`]);
+	touches.push([`${x}, ${y}`]);
+	console.log(touches);
+};
 
+const drawCoordPair = function(arr){
+	alert("it worked");
+
+for(let i = 0; i<arr.length; i++){
+	
+	ctx.fillRect(arr[i][0], arr[i][1], arr[i][0]+1, arr[i][1]+1);
+
+
+}
 };
 
 
+
+
+
+
+//event handlers
 clearBtn.addEventListener("click", clearButton, false);
-body.addEventListener("touchstart", showCoordinates, false);
+cvs.addEventListener("touchstart", logCoordinates, false);
+cvs.addEventListener("touchmove", logCoordinates, false);
+cvs.addEventListener("touchend", drawCoordPair, false);
 
 </script>
 
